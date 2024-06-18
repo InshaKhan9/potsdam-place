@@ -21,8 +21,8 @@ const NearbyPlaces = ({ places }) => {
             <tr key={index}>
               <td>{place.name}</td>
               <td>{place.hereName}</td>
-              <td>{place.googleCoords}</td>
-              <td>{place.hereCoords}</td>
+              <td>{place.googleCoords.lat}, {place.googleCoords.lng}</td>
+              <td>{place.hereCoords ? `${place.hereCoords.lat}, ${place.hereCoords.lng}` : 'N/A'}</td>
               <td>{place.distance}</td>
             </tr>
           ))}
@@ -35,7 +35,7 @@ const NearbyPlaces = ({ places }) => {
   function downloadCSV() {
     const csvContent = "data:text/csv;charset=utf-8," +
       "Place Name,Google Coordinates,HERE WeGo Place Name,HERE WeGo Coordinates,Coordinate Difference (km)\n" +
-      places.map(place => `"${place.name}","${place.googleCoords}","${place.hereName}","${place.hereCoords}","${place.distance}"`).join("\n");
+      places.map(place => `"${place.name}","${place.googleCoords.lat}, ${place.googleCoords.lng}","${place.hereName}","${place.hereCoords ? `${place.hereCoords.lat}, ${place.hereCoords.lng}` : 'N/A'}","${place.distance}"`).join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
